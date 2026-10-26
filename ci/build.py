@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager, nullcontext
+from contextlib import contextmanager
 import hashlib
 import json
 import os
@@ -120,6 +120,31 @@ def machine_build_lock():
                 fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
 
 
+@contextmanager
+def short_build_workspace(enabled: bool):
+    if not enabled:
+        yield None
+        return
+    directory = Path(tempfile.mkdtemp(prefix="dl-ci-")).resolve()
+    parent = Path(tempfile.gettempdir()).resolve()
+    if directory.parent != parent or not directory.name.startswith("dl-ci-"):
+        raise RuntimeError("Unexpected build workspace")
+    try:
+        if shutil.disk_usage(directory).free < 4 * 1024 ** 3:
+            raise RuntimeError("Build workspace needs at least 4 GiB free")
+        yield directory
+    except BaseException:
+        print(f"Build diagnostics retained at {directory}", file=sys.stderr)
+        raise
+    else:
+        if directory.parent != parent or directory.resolve() != directory or directory.is_symlink():
+            raise RuntimeError("Build workspace changed before cleanup")
+        try:
+            shutil.rmtree(directory)
+        except OSError:
+            print(f"Build succeeded; workspace cleanup incomplete at {directory}", file=sys.stderr)
+
+
 def native_platform() -> str:
     system = {"Windows": "windows", "Linux": "linux", "Darwin": "macosx"}[platform.system()]
     architecture = {"AMD64": "amd64", "x86_64": "amd64", "aarch64": "arm64", "arm64": "arm64"}[platform.machine()]
@@ -151,12 +176,8 @@ def build(repository: Path, ide_override: Path | None, check_only: bool) -> None
         return
     # MSBuild's native file tracker still needs short generated paths on Windows.
     # Keep this fresh SDK/peer tree owned by the job; never reuse the user's IDE.
-    short_native = ide_override is None and os.name == "nt" and declaration["native"]
-    with machine_build_lock(), (tempfile.TemporaryDirectory(prefix="dl-native-") if short_native else nullcontext(None)) as native_root:
-        if native_root is not None:
-            workspace = Path(native_root).resolve()
-            if workspace.parent != Path(tempfile.gettempdir()).resolve() or not workspace.name.startswith("dl-native-"):
-                raise RuntimeError("Unexpected native build workspace")
+    short_windows = ide_override is None and os.name == "nt"
+    with machine_build_lock(), short_build_workspace(short_windows) as native_root:
         ide = ide_override.resolve(strict=True) if ide_override else Path(native_root) / "sdk" if native_root else repository / "build/ide-source"
         source_directory = repository
         sdk_projects = None
