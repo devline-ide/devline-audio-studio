@@ -2,14 +2,20 @@
 import hashlib
 import json
 import shutil
-import sys
+import argparse
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
-source, destination = (Path(value).resolve(strict=False) for value in sys.argv[1:])
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('source', type=Path)
+parser.add_argument('destination', type=Path)
+parser.add_argument('--ide-root', type=Path, required=True, help='Explicit IDE checkout for this optional whole-host preview')
+args = parser.parse_args()
+source, destination = args.source.resolve(), args.destination.resolve()
+ide_root = args.ide_root.resolve(strict=True)
 assert source.is_dir() and not destination.exists(), 'Use a new destination'
 assert source != destination and source not in destination.parents
-frontend = Path('devline-web-shell/dist').resolve()
+frontend = ide_root / 'devline-web-shell/dist'
 assert (frontend / 'index.html').is_file()
 destination.mkdir(parents=True)
 for child in source.iterdir():
@@ -39,7 +45,7 @@ files = ('components/extensions/ExtensionDocumentLauncher.vue', 'components/exte
          'components/content-browser/ContentBrowserDock.vue', 'components/extensions/extension-document-launcher.scss')
 receipt = {'kind': 'frozen-backend-new-shell', 'backend': str(source), 'backendJar': sha(original.read_bytes()),
            'previewJar': sha(jar.read_bytes()), 'nonWebJarEntriesUnchanged': True,
-           'sources': {file: sha((Path('devline-web-shell/src') / file).read_bytes()) for file in files},
+           'sources': {file: sha((ide_root / 'devline-web-shell/src' / file).read_bytes()) for file in files},
            'web': {file.relative_to(frontend).as_posix(): sha(file.read_bytes()) for file in sorted(frontend.rglob('*')) if file.is_file()}}
 (destination / 'shell-preview-receipt.json').write_text(json.dumps(receipt, indent=2), encoding='utf8')
 print('FROZEN_SHELL_PREVIEW_READY', destination)
