@@ -1,0 +1,13 @@
+:root {
+  --studio-marker-default: var(--color-accent);
+  --studio-track-default: #347dff;
+  --studio-pattern-bg: color-mix(in srgb, var(--color-accent) 15%, var(--color-editor-bg));
+  --studio-pattern-text: var(--color-accent);
+  --studio-pattern-border: color-mix(in srgb, var(--color-accent) 65%, var(--color-border-subtle));
+  --studio-audio-bg: color-mix(in srgb, var(--color-text-secondary) 12%, var(--color-editor-bg));
+  --studio-grid-line: var(--color-border-subtle);
+  --studio-grid-fine: color-mix(in srgb, var(--color-border-subtle) 50%, transparent);
+  --studio-piano-black: var(--color-input-bg);
+  --studio-selected-bg: color-mix(in srgb, var(--color-accent) 12%, var(--color-editor-bg));
+  --studio-meter-fill: var(--color-accent);
+}
