@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 import hashlib
 import json
 import os
@@ -149,8 +149,15 @@ def build(repository: Path, ide_override: Path | None, check_only: bool) -> None
         print(json.dumps({"id": manifest["id"], "sourceVersion": manifest["version"],
                           "buildPlatform": actual_platform, "distribution": declaration["distribution"]}))
         return
-    with machine_build_lock():
-        ide = ide_override.resolve(strict=True) if ide_override else repository / "build/ide-source"
+    # MSBuild's native file tracker still needs short generated paths on Windows.
+    # Keep this fresh SDK/peer tree owned by the job; never reuse the user's IDE.
+    short_native = ide_override is None and os.name == "nt" and declaration["native"]
+    with machine_build_lock(), (tempfile.TemporaryDirectory(prefix="dl-native-") if short_native else nullcontext(None)) as native_root:
+        if native_root is not None:
+            workspace = Path(native_root).resolve()
+            if workspace.parent != Path(tempfile.gettempdir()).resolve() or not workspace.name.startswith("dl-native-"):
+                raise RuntimeError("Unexpected native build workspace")
+        ide = ide_override.resolve(strict=True) if ide_override else Path(native_root) / "sdk" if native_root else repository / "build/ide-source"
         source_directory = repository
         sdk_projects = None
         if ide_override is None:
@@ -174,7 +181,7 @@ def build(repository: Path, ide_override: Path | None, check_only: bool) -> None
             # Shared UI exports reference these workspace packages' dist entries.
             for workspace in ("@devline/animgraph", "@devline/game-render-web"):
                 run(npm + ["run", "build", "--workspace", workspace], ide)
-            peers = repository / "build/extension-peers"
+            peers = Path(native_root) / "peers" if native_root else repository / "build/extension-peers"
             peers.mkdir(parents=True, exist_ok=False)
             sys.path.insert(0, str(ide / "tools/extensions"))
             from workspace import bootstrap
