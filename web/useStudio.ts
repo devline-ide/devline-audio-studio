@@ -1,5 +1,5 @@
 import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
-import { createDesignerDockState, type DesignerDockState } from '@devline/ui-web'
+import { createDesignerDockState, type DesignerDockState } from '@devline/ui-web/controls'
 import { sdk } from './sdk'
 import type { StudioPreferences } from './preferences'
 import { createTrackMute } from './trackMute'

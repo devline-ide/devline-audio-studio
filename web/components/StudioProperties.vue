@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UICheckbox, UIIcon, UIInput, UISelect, UISlider, UISpoiler, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web'
+import { UIButton, UICheckbox, UIIcon, UIInput, UISelect, UISlider, UISpoiler, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web/controls'
 import type { useStudio } from '../useStudio'
 import { uid, type Track } from '../model'
 const { studio: s } = defineProps<{ studio: ReturnType<typeof useStudio> }>()

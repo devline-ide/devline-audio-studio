@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIIcon, UISelect, UISlider } from '@devline/ui-web'
+import { UIButton, UIIcon, UISelect, UISlider } from '@devline/ui-web/controls'
 import { clone, type Note } from '../model'
 import type { useStudio } from '../useStudio'
 import { useFollowPlayhead } from '../useFollowPlayhead'

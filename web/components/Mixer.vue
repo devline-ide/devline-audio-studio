@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { UIButton, UISelect, UISlider, vUITooltip as vTippy } from '@devline/ui-web'
+import { UIButton, UISelect, UISlider, vUITooltip as vTippy } from '@devline/ui-web/controls'
 import TrackHeader from './TrackHeader.vue'
 import type { useStudio } from '../useStudio'
 

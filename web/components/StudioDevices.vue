@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { UIButton, UICheckbox, UIInput, UISelect, UISpoiler, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web'
+import { UIButton, UICheckbox, UIInput, UISelect, UISpoiler, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web/controls'
 import type { useStudio } from '../useStudio'
 import { sdk } from '../sdk'
 const { studio: s } = defineProps<{ studio: ReturnType<typeof useStudio> }>()

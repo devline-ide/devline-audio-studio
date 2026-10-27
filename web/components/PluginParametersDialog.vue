@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIIcon, UIInput, UIModal, UIPropertyColumns, UIPropertyRow, UISlider } from '@devline/ui-web'
+import { UIButton, UIIcon, UIInput, UIModal, UIPropertyColumns, UIPropertyRow, UISlider } from '@devline/ui-web/controls'
 import type { useStudio } from '../useStudio'
 const { studio: s } = defineProps<{ studio: ReturnType<typeof useStudio> }>()
 const { t } = useI18n(), id = useId(), search = ref(''), offset = ref(0), loading = ref(false)

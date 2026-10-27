@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIIcon, UIInfoTip, UISelect, UISwitch } from '@devline/ui-web'
+import { UIButton, UIIcon, UIInfoTip, UISelect, UISwitch } from '@devline/ui-web/controls'
 import { sdk } from '../sdk'
 import { defaultPreferences, type StudioPreferences } from '../preferences'
 

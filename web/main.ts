@@ -1,12 +1,12 @@
 import { createApp, h } from 'vue'
-import { installUI, UIModalProvider } from '@devline/ui-web'
+import { installUI, UIModalProvider } from '@devline/ui-web/controls'
 import { createI18n } from 'vue-i18n'
 import App from './components/StudioEditor.vue'
 import Settings from './components/StudioSettings.vue'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
 import { sdk } from './sdk'
-import '@devline/ui-web/style.css'
+import '@devline/ui-web/controls.css'
 import './styles/studio.scss'
 
 void sdk.ready.then(() => {

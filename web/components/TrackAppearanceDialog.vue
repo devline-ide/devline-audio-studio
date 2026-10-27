@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIInput, UISelect, UIIcon, UIColorPicker, UIModal, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web'
+import { UIButton, UIInput, UISelect, UIIcon, UIColorPicker, UIModal, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web/controls'
 import { trackIcons, trackIcon } from '../trackAppearance'
 import type { useStudio } from '../useStudio'
 const { studio: s } = defineProps<{ studio: ReturnType<typeof useStudio> }>()

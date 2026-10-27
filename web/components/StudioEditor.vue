@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UISkeleton, UIButton, UIContextMenu, UIIcon, UIInfoTip, UIInput, UISelect, UIToolDock, vUITooltip as vTippy } from '@devline/ui-web'
+import { UISkeleton, UIButton, UIContextMenu, UIIcon, UIInfoTip, UIInput, UISelect, UIToolDock, vUITooltip as vTippy } from '@devline/ui-web/controls'
 import { useStudio } from '../useStudio'
 import { uid } from '../model'
 import { sdk } from '../sdk'

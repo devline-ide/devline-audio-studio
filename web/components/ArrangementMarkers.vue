@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, useId } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIColorPicker, UIContextMenu, UIIcon, UIInfoTip, UIInput, UIModal, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web'
+import { UIButton, UIColorPicker, UIContextMenu, UIIcon, UIInfoTip, UIInput, UIModal, UIPropertyColumns, UIPropertyRow } from '@devline/ui-web/controls'
 import { quantize, tickToFrame, uid, type Composition } from '../model'
 import type { useStudio } from '../useStudio'
 

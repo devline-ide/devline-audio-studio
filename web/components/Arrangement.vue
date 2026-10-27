@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { UIButton, UIIcon, UIContextMenu } from '@devline/ui-web'
+import { UIButton, UIIcon, UIContextMenu } from '@devline/ui-web/controls'
 import { clone, quantize, uid, tickToFrame, frameToTick, type Clip, type Track } from '../model'
 import type { useStudio } from '../useStudio'
 import { useFollowPlayhead } from '../useFollowPlayhead'
