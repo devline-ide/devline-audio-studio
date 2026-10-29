@@ -47,7 +47,7 @@ val prepareExtension = tasks.register<Exec>("prepareExtension") {
 val extensionArchive = tasks.register<Zip>("extensionArchive") {
     group = "distribution"
     dependsOn(prepareExtension)
-    archiveFileName.set("devline-sound-studio-0.1.8.dlextension")
+    archiveFileName.set("devline-sound-studio-0.1.9.dlextension")
     destinationDirectory.set(layout.buildDirectory.dir("extension"))
     from(prepareExtension)
     into("lib") {

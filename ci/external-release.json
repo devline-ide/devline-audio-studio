@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "itemId": "devline.sound-studio",
+  "sourceRepository": "devline-ide/devline-audio-studio",
+  "sourceRepositoryId": 1434834962,
+  "distributionRepository": "devline-ide/devline-sound-studio-releases",
+  "distributionRepositoryId": 1437893893,
+  "ownerId": 328436105,
+  "platforms": [
+    "windows-amd64"
+  ],
+  "sourceVisibility": "public"
+}

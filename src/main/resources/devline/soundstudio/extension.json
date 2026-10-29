@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "devline.sound-studio",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "name": { "en": "Sound Studio", "ru": "Музыкальная студия" },
   "description": { "en": "Music and sound effects for games", "ru": "Музыка и звуковые эффекты для игр" },
   "publisher": "DevLine",
